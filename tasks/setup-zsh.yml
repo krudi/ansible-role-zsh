@@ -1,0 +1,9 @@
+---
+- name: Installation of zsh
+  apt:
+    name: zsh
+    state: present
+    update_cache: yes
+
+- name: Make the zsh to default shell
+  shell: chsh -s $(which zsh)

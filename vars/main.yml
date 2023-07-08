@@ -1,0 +1,6 @@
+---
+# Variable to get current home path
+home: "{{ lookup('env', 'HOME') }}"
+
+# Variable to get current user
+user: "{{ lookup('env', 'USER') }}"

@@ -1,0 +1,8 @@
+---
+- name: Loading a task to install zsh
+  include_tasks: setup-zsh.yml
+  when: ansible_os_family == "Debian"
+
+- name: Loading a task to install Oh My Zsh
+  include_tasks: setup-ohmyzsh.yml
+  when: ansible_os_family == "Debian"

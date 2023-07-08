@@ -1,3 +1,17 @@
 ---
 - name: Installation of Oh My Zsh
+  become: yes
+  become_user: "{{ user }}"
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+- name: Checking if the directory of Oh My Zsh plugins exists
+  stat:
+    path: "{{ oh_my_zsh_plugins_directory }}"
+  register: ohmyzsh_plugins_directory
+
+- name: Cloning all the Oh My Zsh plugins
+  git:
+    repo: "{{ item }}"
+    dest: "{{ oh_my_zsh_plugins_directory }}/{{ item }}"
+  loop: "{{ oh_my_zsh_plugins }}"
+  when: ohmyzsh_plugins_directory.stat.exists

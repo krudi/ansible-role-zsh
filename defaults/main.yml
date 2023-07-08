@@ -1,2 +1,5 @@
 ---
 # Defaults file for ansible-role-zsh
+oh_my_zsh_plugins_directory: ./.oh-my-zsh/custom/plugins
+oh_my_zsh_plugins:
+  - https://github.com/zsh-users/zsh-autosuggestions.git

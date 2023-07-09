@@ -1,5 +1,5 @@
 ---
-- name: Checking if the directory if Oh My Zsh folder exists
+- name: Check if Oh My Zsh folder exists
   stat:
     path: "{{ user }}/.oh-my-zsh"
   register: ohmyzsh_directory
@@ -8,16 +8,17 @@
   become: yes
   become_user: "{{ user }}"
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when: ohmyzsh_directory.stat.exists
+  when: not ohmyzsh_directory.stat.exists
+  failed_when: false
 
 - name: Checking if the directory of Oh My Zsh plugins exists
   stat:
     path: "{{ oh_my_zsh_plugins_directory }}"
   register: ohmyzsh_plugins_directory
 
-- name: Cloning all the Oh My Zsh folder plugins
+- name: Cloning all the Oh My Zsh plugins
   git:
-    repo: "{{ item }}"
-    dest: "{{ oh_my_zsh_plugins_directory }}/{{ item }}"
+    repo: "{{ item.url }}"
+    dest: "{{ home }}/{{ oh_my_zsh_plugins_directory }}/{{ item.url | regex_replace('.+/(.+)\\.git$', '\\1') }}"
   loop: "{{ oh_my_zsh_plugins }}"
   when: ohmyzsh_plugins_directory.stat.exists

@@ -19,6 +19,9 @@ Example use of a role, that will install the latest version of [zsh](https://www
 - hosts: all
   roles:
     - role: krudi.zsh
+      oh_my_zsh_plugins_directory: ./.oh-my-zsh/custom/plugins
+      oh_my_zsh_plugins:
+        - url: https://github.com/zsh-users/zsh-autosuggestions.git
 ```
 
 ## Issue

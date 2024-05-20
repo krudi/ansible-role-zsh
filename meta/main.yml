@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: nvm
+  description: A role for Ansible, that installs zsh and Oh My Zsh for better Terminal workflow.
+  license: MIT
+  min_ansible_version: "2.0"
+  author: krudi
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+
+  galaxy_tags:
+    - zsh
+    - ohmyzsh
+    - terminal
+
+dependencies: []

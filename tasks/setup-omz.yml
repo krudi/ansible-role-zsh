@@ -1,0 +1,17 @@
+- name: Clone Oh My Zsh for the user
+  become: true
+  become_user: "{{ omz.user }}"
+  ansible.builtin.git:
+    repo: "https://github.com/robbyrussell/oh-my-zsh"
+    dest: "~/.oh-my-zsh"
+    version: master
+    update: no
+  when: omz.install | default(omz.install)
+
+- name: Set correct permissions of Oh My Zsh folder
+  become: true
+  ansible.builtin.file:
+    path: "~/.oh-my-zsh"
+    mode: "0700"
+    recurse: true
+  when: omz.install | default(omz.install)

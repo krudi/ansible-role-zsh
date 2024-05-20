@@ -1,0 +1,8 @@
+# Ansible files
+
+*.retry
+
+# Environment variables
+
+*.env
+!.env-*

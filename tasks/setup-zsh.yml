@@ -1,0 +1,18 @@
+- name: Set default shell for the user
+  become: true
+  ansible.builtin.user:
+    name: "{{ omz.user }}"
+    shell: "/bin/zsh"
+  when: omz.install | default(omz.install)
+
+- name: Create a official .zshrc file for the user
+  become: true
+  become_user: "{{ omz.user }}"
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "~/.zshrc"
+    backup: true
+    mode: "0644"
+  when: >-
+    ((omz.install | default(omz.install)) | bool)
+    and ((zsh.write_file | default(zsh.write_file)) | bool)

@@ -1,0 +1,4 @@
+---
+omz_dependencies:
+  - zsh
+  - git

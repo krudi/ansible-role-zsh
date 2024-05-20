@@ -1,0 +1,12 @@
+---
+- name: Loading a task to install dependencies (Debian)
+  ansible.builtin.include_tasks: setup-dependencies.yml
+  when: ansible_os_family == "Debian"
+
+- name: Loading a task to install Oh My Zsh (Debian)
+  ansible.builtin.include_tasks: setup-omz.yml
+  when: ansible_os_family == "Debian"
+
+- name: Loading a task to configure Zsh (Debian)
+  ansible.builtin.include_tasks: setup-zsh.yml
+  when: ansible_os_family == "Debian"

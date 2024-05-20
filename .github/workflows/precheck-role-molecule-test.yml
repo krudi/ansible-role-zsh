@@ -1,0 +1,43 @@
+---
+name: Run role tests using Molecule
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+  schedule:
+    - cron: "7 4 4 * *"
+
+jobs:
+  precheck-role-molecule-test:
+    name: Build test instance
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - distro: ubuntu2404
+            playbook: converge.yml
+          - distro: ubuntu2204
+            playbook: converge.yml
+
+    steps:
+      - name: Checkout the current branch
+        uses: actions/checkout@main
+
+      - name: Setup of Python 3
+        uses: actions/setup-python@main
+        with:
+          python-version: "3.x"
+
+      - name: Install Ansible dependencies
+        run: pip3 install ansible molecule molecule-plugins[docker] docker
+
+      - name: Run Molecule test commands
+        run: molecule test
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"

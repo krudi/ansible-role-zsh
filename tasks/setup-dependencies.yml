@@ -1,0 +1,14 @@
+---
+- name: Ensure APT package cache is updated
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 600
+
+- name: Install required dependencies
+  become: true
+  ansible.builtin.package:
+    name: "{{ dependency }}"
+    state: present
+  loop: "{{ omz_dependencies }}"
+  loop_control:
+    loop_var: dependency

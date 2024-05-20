@@ -1,0 +1,9 @@
+---
+zsh:
+  write_file: true
+omz:
+  install: true
+  user: bob
+  plugins:
+    - git
+    - zsh-autosuggestions

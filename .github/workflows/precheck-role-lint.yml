@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the current branch
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
       - name:  Run ansible-lint linting command
         uses: ansible/ansible-lint@main

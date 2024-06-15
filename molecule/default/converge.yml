@@ -19,16 +19,15 @@
 
     - name: Create test users for role testing
       ansible.builtin.user:
-        name: "{{ user }}"
+        name: "bob"
         shell: /bin/bash
         state: present
-      with_items:
-        - "{{ omz.user }}"
-      loop_control:
-        loop_var: user
 
   roles:
     - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
+      zsh:
+        write_file: true
+        change_shell: true
       omz:
         install: true
         user: bob

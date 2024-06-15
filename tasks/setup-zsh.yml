@@ -3,7 +3,7 @@
   ansible.builtin.user:
     name: "{{ omz.user }}"
     shell: "/bin/zsh"
-  when: omz.install | default(omz.install)
+  when: omz.install | default(omz.install) and not zsh.change_shell
 
 - name: Create a official .zshrc file for the user
   become: true

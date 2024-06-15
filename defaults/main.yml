@@ -1,6 +1,7 @@
 ---
 zsh:
   write_file: true
+  change_shell: true
 omz:
   install: true
   user: bob

@@ -20,7 +20,8 @@ Example use of a role, that will install the latest version of [zsh](https://www
   roles:
     - role: krudi.zsh
       zsh:
-        write_file: false
+        write_file: true
+        change_shell: true
       omz:
         install: true
         user: bob

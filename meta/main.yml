@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: nvm
+  role_name: zsh
   description: A role for Ansible, that installs zsh and Oh My Zsh for better Terminal workflow.
   license: MIT
   min_ansible_version: "2.0"

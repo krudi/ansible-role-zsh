@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  precheck-role-lint:
+  prepare:
     name: Lint
     runs-on: ubuntu-latest
     steps:

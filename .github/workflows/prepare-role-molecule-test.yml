@@ -11,7 +11,7 @@ on:
     - cron: "7 4 4 * *"
 
 jobs:
-  precheck-role-molecule-test:
+  prepare:
     name: Build test instance
     runs-on: ubuntu-latest
     strategy:

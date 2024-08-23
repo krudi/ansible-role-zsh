@@ -8,7 +8,7 @@ on:
       - main
 
   schedule:
-    - cron: "7 4 4 * *"
+    - cron: "0 22 * * 5"
 
 jobs:
   prepare:

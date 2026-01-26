@@ -1,8 +1,43 @@
 # Ansible files
-
 *.retry
 
-# Environment variables
-
+# Environment files
 *.env
 !.env-*
+
+# Python virtual environments
+.venv
+
+# Dependencies files
+node_modules
+
+# Build output files
+dist
+build
+dev-dist
+
+# Tooling caches files
+.turbo
+.cache/.eslintcache
+.eslint-config-inspector
+.cache/.prettiercache
+.cache/.stylelintcache
+.cache/tsbuildinfo.json
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Compiled artifacts files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Secrets files
+*.der
+*.key
+*.pem

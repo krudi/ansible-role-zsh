@@ -1,26 +1,35 @@
-name: Release the Ansible role to Ansible Galaxy
+name: Release (Ansible Galaxy)
 
 on:
-  push:
-    tags:
-      - "*"
+    release:
+        types: [published]
+
+    workflow_dispatch:
+
+concurrency:
+    group: release-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: write
+    id-token: write
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the current branch
-        uses: actions/checkout@v4
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the current branch
+              uses: actions/checkout@v4
 
-      - name: Setup of Python 3
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
+            - name: Setup of Python 3
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.x"
 
-      - name: Install Ansible dependencies
-        run: pip3 install ansible-core
+            - name: Install Ansible dependencies
+              run: pip3 install ansible-core
 
-      - name: Release the Ansible role
-        run: >-
-          ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
-          $(echo ${{ github.repository }} | cut -d/ -f1) $(echo ${{ github.repository }} | cut -d/ -f2)
+            - name: Release the Ansible role
+              run: >-
+                  ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
+                  $(echo ${{ github.repository }} | cut -d/ -f1) $(echo ${{ github.repository }} | cut -d/ -f2)

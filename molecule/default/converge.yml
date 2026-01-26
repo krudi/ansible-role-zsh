@@ -24,7 +24,7 @@
         state: present
 
   roles:
-    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
       zsh:
         write_file: true
         change_shell: true

@@ -49,10 +49,10 @@ jobs:
             - name: Setup of Python 3
               uses: actions/setup-python@v5
               with:
-                  python-version: "3.x"
+                  python-version: "3.11"
 
             - name: Install Ansible dependencies
-              run: pip3 install "ansible-core>=2.18,<2.19" "molecule>=24,<25" "molecule-plugins[docker]>=23,<24" "docker>=7,<8"
+              run: pip3 install "ansible-core>=2.16,<2.18" "molecule>=24,<25" "molecule-plugins[docker]>=23,<24" "docker>=7,<8"
 
             - name: Run Molecule test commands
               run: molecule test

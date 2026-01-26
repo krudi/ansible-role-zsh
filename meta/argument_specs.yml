@@ -1,0 +1,29 @@
+---
+argument_specs:
+  main:
+    short_description: Install Zsh and Oh My Zsh.
+    options:
+      zsh:
+        type: dict
+        options:
+          write_file:
+            type: bool
+            default: true
+          change_shell:
+            type: bool
+            default: true
+      omz:
+        type: dict
+        options:
+          install:
+            type: bool
+            default: true
+          user:
+            type: str
+            default: bob
+          plugins:
+            type: list
+            elements: str
+            default:
+              - git
+              - zsh-autosuggestions

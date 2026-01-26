@@ -1,0 +1,24 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check zsh binary is available
+      ansible.builtin.command: zsh --version
+      register: zsh_version
+      changed_when: false
+
+    - name: Check Oh My Zsh directory exists
+      ansible.builtin.stat:
+        path: /home/bob/.oh-my-zsh
+      register: omz_dir
+
+    - name: Check .zshrc exists
+      ansible.builtin.stat:
+        path: /home/bob/.zshrc
+      register: zshrc_file
+
+    - name: Assert user config exists
+      ansible.builtin.assert:
+        that:
+          - omz_dir.stat.exists
+          - zshrc_file.stat.exists

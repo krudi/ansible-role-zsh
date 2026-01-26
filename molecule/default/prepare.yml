@@ -2,6 +2,10 @@
 - name: Prepare
   hosts: all
   tasks:
+    - name: Load role vars
+      ansible.builtin.include_vars:
+        file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/vars/main.yml"
+
     - name: Ensure APT package cache is updated
       ansible.builtin.apt:
         upgrade: yes

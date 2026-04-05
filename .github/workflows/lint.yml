@@ -19,6 +19,7 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         runs-on: ubuntu-latest
         steps:
+
             - name: Checkout the current branch
               uses: actions/checkout@v6
 

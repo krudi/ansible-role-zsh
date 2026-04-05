@@ -41,6 +41,7 @@ jobs:
                       playbook: converge.yml
 
         steps:
+
             - name: Checkout the current branch
               uses: actions/checkout@v6
               with:

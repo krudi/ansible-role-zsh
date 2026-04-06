@@ -9,11 +9,18 @@
 - [ ] Documentation change/changes (add new documentation or fix)
 - [ ] Test change/changes (add new test/tests or fix)
 
-## Checklist
+## Problem
 
-- [ ] I have read the [Contributing Guidelines](https://github.com/krudi/ansible-role-zsh/main/CONTRIBUTING.md)
-- [ ] My code follows the code style (`npm run lint:full`)
+Briefly describe the issue or limitation.
+
+## Solution
+
+Explain what you changed and how it solves the problem.
 
 ## Related topics
 
 - [Example link](https://example.com)
+
+## Checklist
+
+- [ ] I have read the [Contributing Guidelines](https://github.com/krudi/ansible-role-zsh/blob/main/CONTRIBUTING.md)

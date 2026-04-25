@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "project": {
+    "name": "ansible-role-zsh",
+    "description": "Ansible role \u2014 install zsh and Oh My Zsh",
+    "type": "ansible-role",
+    "status": "active"
+  },
+  "stack": {
+    "language": "yaml",
+    "framework": "ansible",
+    "packageManager": null
+  },
+  "commands": {
+    "lint": "ansible-lint",
+    "test": "molecule test",
+    "converge": "molecule converge"
+  },
+  "docs": {
+    "agentsFile": "AGENTS.md",
+    "claudeFile": "CLAUDE.md",
+    "rules": ".ai/rules/ansible.md",
+    "lessons": ".ai/memory/lessons.md"
+  }
+}

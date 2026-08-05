@@ -21,7 +21,7 @@ jobs:
         steps:
 
             - name: Checkout the current branch
-              uses: actions/checkout@v6
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
 
             - name: Run ansible-lint linting command
               uses: ansible/ansible-lint@v26.4.0

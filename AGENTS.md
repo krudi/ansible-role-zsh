@@ -39,19 +39,9 @@ molecule test      # full test (if molecule configured)
 
 ## Rules
 
-@.ai/rules/ansible.md
+@.ai/rules/ansible.md @.ai/memory/lessons.md @.ai/skills/commit/SKILL.md @.ai/skills/pr/SKILL.md @.ai/skills/retrospective/SKILL.md
 
----
-
-## For Claude Code
-
-### Rules loaded automatically
-
-| Rule file | Applied to |
-|-----------|---|
-| `.ai/rules/ansible.md` | `**/*.yml`, `**/*.yaml` |
-
-### Constraints
+## Constraints
 
 - Oh My Zsh installs per-user — tasks must run as the target user (not root)
 - Plugin and theme selection comes from variables in `defaults/main.yml` — never hardcode them in tasks

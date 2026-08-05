@@ -1,0 +1,5 @@
+# Codex CLI configuration for this repository.
+# Keep the environment policy in sync with .claude/settings.json.
+
+[shell_environment_policy]
+set = { DO_NOT_TRACK = "1" }

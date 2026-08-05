@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Ansible: lint",
+            "type": "shell",
+            "command": "ansible-lint",
+            "problemMatcher": []
+        },
+        {
+            "label": "Molecule: test",
+            "type": "shell",
+            "command": "molecule test",
+            "problemMatcher": []
+        }
+    ]
+}

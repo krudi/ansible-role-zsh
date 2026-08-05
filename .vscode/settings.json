@@ -1,0 +1,14 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.addMissingImports.ts": "never",
+        "source.organizeImports": "never",
+        "source.removeUnused.ts": "never",
+        "source.removeUnusedImports": "never",
+        "source.sort.json": "never",
+        "source.sortImports": "never"
+    },
+    "files.associations": {
+        "**/tasks/*.yml": "ansible",
+        "**/handlers/*.yml": "ansible"
+    }
+}

@@ -3,31 +3,24 @@
 
 # Environment files
 *.env
+.env*
+!.env*.example
 !.env-*
 
-# Python virtual environments
+# Python virtual environment files
 .venv
 
-# Dependencies files
-node_modules
+# Tooling cache files
+.cache
 
-# Build output files
-dist
-build
-dev-dist
-
-# Tooling caches files
-.turbo
-.cache/.eslintcache
-.eslint-config-inspector
-.cache/.prettiercache
-.cache/.stylelintcache
-.cache/tsbuildinfo.json
+# Agent tooling files
+.claude/settings.local.json
 
 # OS files
 .DS_Store
 .AppleDouble
 .LSOverride
+Thumbs.db
 
 # Compiled artifacts files
 *.com

@@ -9,6 +9,21 @@
     },
     "files.associations": {
         "**/tasks/*.yml": "ansible",
-        "**/handlers/*.yml": "ansible"
+        "**/handlers/*.yml": "ansible",
+        ".env": "dotenv",
+        ".env.*": "dotenv",
+        "*.env": "dotenv"
+    },
+    "[dotenv]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
+    },
+    "[properties]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
+    },
+    "[plaintext]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": null
     }
 }

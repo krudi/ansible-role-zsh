@@ -28,7 +28,9 @@ permissions:
 jobs:
     test:
         runs-on: ubuntu-latest
+        timeout-minutes: 30
         strategy:
+            fail-fast: false
             matrix:
                 include:
                     - distro: ubuntu2404
@@ -43,17 +45,17 @@ jobs:
         steps:
 
             - name: Checkout the current branch
-              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
               with:
                   path: "ansible-role-zsh"
 
             - name: Setup of Python 3
-              uses: actions/setup-python@v6
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
               with:
                   python-version: "3.11"
 
             - name: Install Ansible dependencies
-              run: pip3 install ansible molecule molecule-plugins[docker] docker
+              run: python -m pip install --disable-pip-version-check --requirement requirements-ci.txt
 
             - name: Run Molecule test commands
               run: molecule test

@@ -17,19 +17,24 @@ permissions:
 jobs:
     release:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
         steps:
             - name: Checkout the current branch
-              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
 
             - name: Setup of Python 3
-              uses: actions/setup-python@v6
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
               with:
-                  python-version: "3.x"
+                  python-version: "3.11"
 
             - name: Install Ansible dependencies
-              run: pip3 install ansible-core
+              run: python -m pip install --disable-pip-version-check --requirement requirements-release.txt
 
             - name: Release the Ansible role
-              run: >-
-                  ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
-                  $(echo ${{ github.repository }} | cut -d/ -f1) $(echo ${{ github.repository }} | cut -d/ -f2)
+              env:
+                  ANSIBLE_GALAXY_API_KEY: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
+                  REPOSITORY: ${{ github.repository }}
+              run: |
+                  owner="${REPOSITORY%%/*}"
+                  repository="${REPOSITORY#*/}"
+                  ansible-galaxy role import --api-key "${ANSIBLE_GALAXY_API_KEY}" "${owner}" "${repository}"

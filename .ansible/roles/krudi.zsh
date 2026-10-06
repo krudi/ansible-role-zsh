@@ -1,1 +1,0 @@
-/home/patryk/general-projects/ansible-role-zsh

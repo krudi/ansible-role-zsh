@@ -17,8 +17,14 @@
         path: /home/bob/.zshrc
       register: zshrc_file
 
+    - name: Read the user's login shell
+      ansible.builtin.getent:
+        database: passwd
+        key: bob
+
     - name: Assert user config exists
       ansible.builtin.assert:
         that:
           - omz_dir.stat.exists
           - zshrc_file.stat.exists
+          - ansible_facts.getent_passwd['bob'][5] == '/bin/zsh'

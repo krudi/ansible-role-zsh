@@ -13,8 +13,12 @@ description: Create a pull request for the current branch with a conventional ti
 4. Draft the PR:
    - **Title**: `type(scope): description` — conventional commit format, ≤ 70 chars
    - **Summary**: 2–3 bullet points on what changed and WHY
-   - **Test plan**: markdown checklist of what to verify before merging
+   - **Test plan**: markdown checklist of the verification commands relevant to the change
 5. Create: `gh pr create --title "..." --body "$(cat <<'EOF' ... EOF)"`
+
+## Test plan options
+
+List the commands from the AGENTS.md verification table rows that match the diff.
 
 ## Never
 

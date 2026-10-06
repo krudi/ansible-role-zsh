@@ -1,6 +1,8 @@
 ---
 name: retrospective
-description: Capture lessons learned after a session. Use when the user corrects your work, after surprises, or at the end of a substantial session. Updates .ai/memory/lessons.md.
+description:
+  Capture project lessons after corrections, surprises, or substantial sessions. Updates AGENTS.md (Lessons or
+  Conventions) or README.md.
 ---
 
 # Session Retrospective
@@ -10,22 +12,23 @@ description: Capture lessons learned after a session. Use when the user corrects
 - User corrects your work (wrong path, wrong assumption, wrong approach)
 - You hit a non-obvious tool limitation or project constraint
 - User says "remember this", "add to lessons", or "document that"
-- End of a session with substantial corrections
+- End of a substantial session with reusable project knowledge
 
 ## Steps
 
-1. Identify what to capture — for each correction, ask: what would have prevented this?
-2. Read `.ai/memory/lessons.md` to check existing lessons
-3. Write or update lessons:
-   - Group by category: Patterns, Gotchas, Commands, Architecture, etc.
-   - Format: `**Bold trigger**: actionable one-sentence lesson`
-   - Max 1–2 sentences per lesson
-   - Update existing entries instead of duplicating
-   - Remove stale/wrong lessons
-4. Keep the file under ~80 lines total — consolidate if it grows
+1. Identify what would have prevented the issue
+2. Read `AGENTS.md` and `README.md`
+3. Update the owner in place:
+   - Gotchas and pitfalls go under `## Lessons` in `AGENTS.md` (add the section before `## AI workflow layout` if it
+     does not exist)
+   - Conventions go under `## Conventions` in `AGENTS.md`
+   - Operational facts about using or testing the role go in `README.md`
+4. Keep it as current fact, not a narrated history of the session; update or remove stale entries instead of
+   duplicating them
+5. Do not create a new documentation file
 
-## What NOT to capture
+## What not to capture
 
 - Trivial typo fixes
 - One-off task details
-- Things already obvious from the error message
+- Information already obvious from the current code or the error message

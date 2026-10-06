@@ -4,9 +4,17 @@
         "DO_NOT_TRACK": "1"
     },
     "permissions": {
+        "disableBypassPermissionsMode": "disable",
         "deny": [
-            "Read(./.env)",
-            "Read(./.env.*)"
+            "Read(./**/.env)",
+            "Read(./**/.env.local)",
+            "Read(./**/.env.*.local)",
+            "Read(./**/.env.production)",
+            "Read(./**/.env.test)",
+            "Read(./**/.env.testing)",
+            "Read(./**/.env.development)",
+            "Read(./**/.env.staging)",
+            "Read(./**/.env.backup)"
         ]
     }
 }

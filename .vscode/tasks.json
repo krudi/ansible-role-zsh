@@ -4,13 +4,13 @@
         {
             "label": "Ansible: lint",
             "type": "shell",
-            "command": "ansible-lint",
+            "command": "uvx --with-requirements requirements-ci.txt ansible-lint",
             "problemMatcher": []
         },
         {
             "label": "Molecule: test",
             "type": "shell",
-            "command": "molecule test",
+            "command": "uvx --with-requirements requirements-ci.txt --from molecule molecule test",
             "problemMatcher": []
         }
     ]

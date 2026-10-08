@@ -57,9 +57,11 @@ This file owns the agent conventions. Do not create competing documentation; upd
 
 ## Working rules
 
-- Run commands from the repository root. The Python tooling is pinned in `requirements-ci.txt` (Ansible, Molecule and
-  its Docker driver) and `requirements-release.txt`; CI uses Python 3.11 and runs `ansible-lint` through the
-  `ansible/ansible-lint` action. Do not install or upgrade tooling unless asked.
+- Run commands from the repository root. The Python tooling is pinned in `requirements-ci.txt` (Ansible,
+  `ansible-lint`, Molecule and its Docker driver) and `requirements-release.txt`; CI installs `requirements-ci.txt` on
+  Python 3.11 for both lint and tests. Run the tools through `uvx` as shown in Verification; do not install or upgrade
+  tooling globally unless asked.
+- `uvx lefthook install` enables the pre-commit hook in `lefthook.yml`, which runs `ansible-lint` on staged role files.
 - Never commit, amend or push unless asked. Stage only files that belong to the task; leave unrelated dirty files,
   owner-local files and untracked scratch exactly as found — never restore, reset or stash them to make a task easier.
 - Generated output (`*.retry`, `.cache/`, `.venv/`, Molecule and ansible-lint state) is never committed.
@@ -67,14 +69,16 @@ This file owns the agent conventions. Do not create competing documentation; upd
   `instance-debian12`, `instance-debian13`). Never start, stop or remove any other container on the host; after an
   interrupted run, clean up only with `molecule destroy`.
 - Do not modify unrelated files solely to make a check pass, and never silently skip a failing check: report the exact
-  command, the failure, and whether it looks related. If `ansible-lint` or `molecule` is not installed, say so and give
-  the command for the owner instead.
+  command, the failure, and whether it looks related. If Docker is unavailable for Molecule, say so and give the command
+  for the owner instead.
 
 ## Verification
 
 Verification is proportional to the change. While iterating, run the row(s) that match the files you touched; before
 declaring a change complete, widen to every area it crosses. `molecule test` provisions real containers, so run it
-deliberately rather than as a routine check.
+deliberately rather than as a routine check. Both tools run at the CI-pinned versions without a global install:
+`ansible-lint` is `uvx --with-requirements requirements-ci.txt ansible-lint`, and `molecule <command>` is
+`uvx --with-requirements requirements-ci.txt --from molecule molecule <command>`.
 
 | Changed area                                                       | While iterating                                        | Before completion, when applicable                                      |
 | ------------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------------- |
@@ -84,8 +88,9 @@ deliberately rather than as a routine check.
 | `README.md`, `AGENTS.md`, `.ai/`                                   | —                                                      | Variable tables match `defaults/main.yml` and `meta/argument_specs.yml` |
 
 `molecule test` runs the full `test_sequence` in `molecule/default/molecule.yml` (syntax, converge, idempotence,
-verify, destroy) on all four platforms; without `MOLECULE_DISTRO` each instance uses its own distro image. CI sets
-`MOLECULE_DISTRO` per matrix entry and also runs weekly.
+verify, destroy) on all four platforms, each with its own distro image; `--platform-name instance-<distro>` limits it to
+one, as each CI matrix job does. CI also runs weekly, and `Release` reruns `Lint` and `Test (Molecule)` before the
+Galaxy import.
 
 ## AI workflow layout
 

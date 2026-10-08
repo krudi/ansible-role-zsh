@@ -14,7 +14,16 @@ permissions:
     contents: read
 
 jobs:
+    lint:
+        uses: ./.github/workflows/lint.yaml
+
+    test:
+        uses: ./.github/workflows/tests.yaml
+
     release:
+        needs:
+            - lint
+            - test
         runs-on: ubuntu-latest
         timeout-minutes: 10
         permissions:

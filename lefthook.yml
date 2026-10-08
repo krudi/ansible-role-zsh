@@ -1,0 +1,7 @@
+glob_matcher: doublestar
+
+pre-commit:
+  jobs:
+    - name: ansible-lint
+      glob: "{tasks,handlers,defaults,vars,meta,molecule,templates}/**/*.{yml,yaml}"
+      run: uvx --with-requirements requirements-ci.txt ansible-lint {staged_files}

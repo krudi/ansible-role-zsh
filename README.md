@@ -44,7 +44,9 @@ See `defaults/main.yml` for the current defaults. Note `omz.user` defaults to `b
 
 ## Testing
 
-This role includes a [Molecule](https://ansible.readthedocs.io/projects/molecule/) test scenario under `molecule/default`. Run it with `molecule test` (requires Docker and provisions real containers, so run it deliberately rather than as part of routine checks).
+This role includes a [Molecule](https://ansible.readthedocs.io/projects/molecule/) test scenario under `molecule/default`. Run it with `uvx --with-requirements requirements-ci.txt --from molecule molecule test` (requires Docker and provisions real containers, so run it deliberately rather than as part of routine checks).
+
+Lint the role with `uvx --with-requirements requirements-ci.txt ansible-lint`; `uvx lefthook install` runs it on staged files before each commit.
 
 ## Issue
 

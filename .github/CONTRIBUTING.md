@@ -14,12 +14,14 @@ Those commit messages are based on [Conventional Commits](https://www.convention
 
 - build: changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
 - ci: changes to our CI configuration files and scripts (examples: CircleCi, SauceLabs)
+- chore: maintenance that changes no behaviour (tooling, agent files, housekeeping)
 - docs: documentation only changes
 - feat: a new feature
 - fix: a bug fix
 - perf: a code change that improves performance
 - refactor: a code change that neither fixes a bug nor adds a feature
 - revert: changes that have been reverted
+- style: formatting-only changes that do not affect meaning (whitespace, indentation)
 - test: adding missing tests or correcting existing tests
 - BREAKING CHANGE/BREAKING CHANGES: the commits that contains **BREAKING CHANGE** or **BREAKING CHANGES** in their body will be considered breaking changes
 

@@ -1,6 +1,8 @@
 ---
 name: commit
-description: Create a conventional commit for staged or unstaged changes. Inspects the diff, drafts the message, and creates the commit.
+description:
+    Create a conventional commit only when the user explicitly asks to commit. Inspects the diff, drafts the message,
+    and creates the commit.
 ---
 
 # Conventional Commit

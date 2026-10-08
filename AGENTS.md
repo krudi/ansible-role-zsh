@@ -1,11 +1,5 @@
 # Agent instructions
 
-This file is the canonical instruction source for every coding agent. `CLAUDE.md` only imports it, because Claude Code
-does not read `AGENTS.md` by itself. Start every agent session at the repository root: Claude Code expands the
-`@AGENTS.md` import only for the working directory's `CLAUDE.md`, and Codex started inside a subdirectory loads only
-that directory's `AGENTS.md` and none of the repository skills. Skills, adapters and nested instruction files point
-here; they never restate rules.
-
 `ansible-role-zsh` is an Ansible role, published to Ansible Galaxy as `krudi.zsh`, that installs zsh and Oh My Zsh
 and writes the user's `~/.zshrc` from `templates/zshrc.j2`.
 
@@ -20,6 +14,7 @@ and writes the user's `~/.zshrc` from `templates/zshrc.j2`.
 | CI lint, test matrix and Galaxy release          | `.github/workflows/`                                   |
 | Branch and commit message conventions            | `.github/CONTRIBUTING.md`                              |
 | Repeatable workflows (commit, PR)                | `.ai/skills/<name>/SKILL.md` — pick by its description |
+| Third-party skills                               | `skills-lock.json` (`npx skills`)                      |
 
 This file owns the agent conventions. Do not create competing documentation; update the owner instead.
 
@@ -40,9 +35,6 @@ This file owns the agent conventions. Do not create competing documentation; upd
 - `tasks/main.yml` is the entry point and only includes the `setup-*.yml` task files. `defaults/main.yml` holds the
   public variables (lowest precedence), `vars/main.yml` the internal ones, `meta/main.yml` the Galaxy metadata and
   dependencies, `templates/*.j2` Jinja2 templates and `files/` static files.
-- `templates/zshrc.j2` renders `~/.zshrc`; its theme is fixed to `robbyrussell` and its `plugins=()` line joins
-  `omz.plugins`.
-- Use fully qualified collection names (`ansible.builtin.package`, not `package`).
 - Task names are descriptive sentence case; handler names describe the action.
 - Variables are `snake_case`. Public variables live in a dict named after the tool (`zsh.write_file`, `omz.user`);
   internal variables in `vars/` are prefixed (`omz_dependencies`).
@@ -52,22 +44,16 @@ This file owns the agent conventions. Do not create competing documentation; upd
 - Prefer `ansible.builtin.template` over `ansible.builtin.copy` for config files that vary per host.
 - Adding a platform means updating `meta/main.yml`, the platforms in `molecule/default/molecule.yml`, the matrix in
   `.github/workflows/tests.yaml` and `README.md` together.
-- `ansible-lint` runs the default rules with `yaml` and `role-name` skipped (`.ansible-lint`). YAML is indented with 2
-  spaces, workflow files with 4 (`.editorconfig`).
 
 ## Working rules
 
-- Run commands from the repository root. The Python tooling is pinned in `requirements-ci.txt` (Ansible,
-  `ansible-lint`, Molecule and its Docker driver) and `requirements-release.txt`; CI installs `requirements-ci.txt` on
-  Python 3.11 for both lint and tests. Run the tools through `uvx` as shown in Verification; do not install or upgrade
-  tooling globally unless asked.
-- `uvx lefthook install` enables the pre-commit hook in `lefthook.yml`, which runs `ansible-lint` on staged role files.
+- Run commands from the repository root. Run the Python tooling (pinned in `requirements-ci.txt`) through `uvx` as
+  shown in Verification; do not install or upgrade tooling globally unless asked.
+- `uvx lefthook install` enables the `lefthook.yml` pre-commit hook; never bypass it with `--no-verify`.
 - Never commit, amend or push unless asked. Stage only files that belong to the task; leave unrelated dirty files,
   owner-local files and untracked scratch exactly as found — never restore, reset or stash them to make a task easier.
-- Generated output (`*.retry`, `.cache/`, `.venv/`, Molecule and ansible-lint state) is never committed.
-- Molecule creates and destroys its own Docker containers (`instance-ubuntu2404`, `instance-ubuntu2204`,
-  `instance-debian12`, `instance-debian13`). Never start, stop or remove any other container on the host; after an
-  interrupted run, clean up only with `molecule destroy`.
+- Molecule creates and destroys its own `instance-*` Docker containers. Never start, stop or remove any other container
+  on the host; after an interrupted run, clean up only with `molecule destroy`.
 - Do not modify unrelated files solely to make a check pass, and never silently skip a failing check: report the exact
   command, the failure, and whether it looks related. If Docker is unavailable for Molecule, say so and give the command
   for the owner instead.
@@ -87,29 +73,5 @@ deliberately rather than as a routine check. Both tools run at the CI-pinned ver
 | `.github/workflows/`                                               | —                                                      | The `Lint` and `Test (Molecule)` workflows on the PR                    |
 | `README.md`, `AGENTS.md`, `.ai/`                                   | —                                                      | Variable tables match `defaults/main.yml` and `meta/argument_specs.yml` |
 
-`molecule test` runs the full `test_sequence` in `molecule/default/molecule.yml` (syntax, converge, idempotence,
-verify, destroy) on all four platforms, each with its own distro image; `--platform-name instance-<distro>` limits it to
-one, as each CI matrix job does. CI also runs weekly, and `Release` reruns `Lint` and `Test (Molecule)` before the
-Galaxy import.
-
-## AI workflow layout
-
-| Path                                          | Holds                                                                                                                          |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `.ai/skills/<name>/`                          | Project skills — the only copy of each; generated files go to the skill's own `output/`, ignored by a skill-local `.gitignore` |
-| `.agents/skills/`                             | Third-party skills managed by `npx skills` (`skills-lock.json`), plus a symlink per project skill so Codex discovers it        |
-| `.claude/skills/`                             | Symlinks only — Claude Code's discovery path into both of the above                                                            |
-| `.claude/settings.json`, `.codex/config.toml` | Per-agent settings only; keep their environment policy in sync                                                                 |
-| `.ai/audits/<YYYY-MM-DD>-<slug>/README.md`    | An audit lives here only while it holds unresolved work                                                                        |
-
-## Project skills
-
-All ansible-role-zsh-owned skills live canonically under `.ai/skills/`.
-
-Agent-specific skill directories such as `.claude/skills/` and `.agents/skills/` must contain only adapters or symlinks
-to those project skills when required for tool discovery (`ln -s ../../.ai/skills/<name>` in both).
-
-Never maintain duplicate copies of an ansible-role-zsh-owned `SKILL.md`.
-
-When an audit is done, move its durable conclusions into `AGENTS.md` or `README.md`, carry any open item to a tracked
-place, and delete the folder — git history is the archive. Audits carry no screenshots or raw dumps.
+`molecule test` runs the `test_sequence` in `molecule/default/molecule.yml` on every platform;
+`--platform-name instance-<distro>` limits it to one, as each CI matrix job does.

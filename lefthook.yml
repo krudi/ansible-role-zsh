@@ -1,4 +1,5 @@
 glob_matcher: doublestar
+lefthook: uvx lefthook
 
 pre-commit:
   jobs:

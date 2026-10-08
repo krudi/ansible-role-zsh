@@ -49,7 +49,8 @@ This file owns the agent conventions. Do not create competing documentation; upd
 
 - Run commands from the repository root. Run the Python tooling (pinned in `requirements-ci.txt`) through `uvx` as
   shown in Verification; do not install or upgrade tooling globally unless asked.
-- `uvx lefthook install` enables the `lefthook.yml` pre-commit hook; never bypass it with `--no-verify`.
+- `uvx lefthook install` enables the `lefthook.yml` pre-commit hook, which runs lefthook through `uvx`; never bypass it
+  with `--no-verify`.
 - Never commit, amend or push unless asked. Stage only files that belong to the task; leave unrelated dirty files,
   owner-local files and untracked scratch exactly as found — never restore, reset or stash them to make a task easier.
 - Molecule creates and destroys its own `instance-*` Docker containers. Never start, stop or remove any other container

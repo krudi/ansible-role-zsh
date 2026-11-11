@@ -43,7 +43,7 @@ This file owns the agent conventions. Do not create competing documentation; upd
 - Set `become: true` on the tasks that need it, never at play level.
 - Prefer `ansible.builtin.template` over `ansible.builtin.copy` for config files that vary per host.
 - Adding a platform means updating `meta/main.yml`, the platforms in `molecule/default/molecule.yml`, the matrix in
-  `.github/workflows/tests.yaml` and `README.md` together.
+  `.github/workflows/ci.yaml` and `README.md` together.
 
 ## Working rules
 
@@ -71,7 +71,7 @@ deliberately rather than as a routine check. Both tools run at the CI-pinned ver
 | ------------------------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------------------- |
 | `tasks/`, `handlers/`, `templates/`, `defaults/`, `vars/`, `meta/` | `ansible-lint`                                         | `molecule test`                                                         |
 | `molecule/`                                                        | `ansible-lint`; `molecule converge && molecule verify` | `molecule test`                                                         |
-| `.github/workflows/`                                               | —                                                      | The `Lint` and `Test (Molecule)` workflows on the PR                    |
+| `.github/workflows/`                                               | —                                                      | The `CI` workflow (`ci` check) on the PR                                |
 | `README.md`, `AGENTS.md`, `.ai/`                                   | —                                                      | Variable tables match `defaults/main.yml` and `meta/argument_specs.yml` |
 
 `molecule test` runs the `test_sequence` in `molecule/default/molecule.yml` on every platform;

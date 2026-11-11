@@ -1,0 +1,70 @@
+---
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - reopened
+
+    schedule:
+        - cron: "0 22 * * 5"
+
+    workflow_call:
+
+defaults:
+    run:
+        working-directory: "ansible-role-zsh"
+
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        timeout-minutes: 120
+        env:
+            PY_COLORS: "1"
+            ANSIBLE_FORCE_COLOR: "1"
+
+        steps:
+
+            - name: Checkout the current branch
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+              with:
+                  path: "ansible-role-zsh"
+
+            - name: Setup of Python 3
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: "3.11"
+
+            - name: Install Ansible dependencies
+              run: python -m pip install --disable-pip-version-check --requirement requirements-ci.txt
+
+            - name: Run ansible-lint linting command
+              run: ansible-lint
+
+            - name: Run Molecule test commands (debian12)
+              if: ${{ !cancelled() }}
+              run: molecule test --platform-name "instance-debian12"
+
+            - name: Run Molecule test commands (debian13)
+              if: ${{ !cancelled() }}
+              run: molecule test --platform-name "instance-debian13"
+
+            - name: Run Molecule test commands (ubuntu2204)
+              if: ${{ !cancelled() }}
+              run: molecule test --platform-name "instance-ubuntu2204"
+
+            - name: Run Molecule test commands (ubuntu2404)
+              if: ${{ !cancelled() }}
+              run: molecule test --platform-name "instance-ubuntu2404"
